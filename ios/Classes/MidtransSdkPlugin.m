@@ -22,9 +22,6 @@ FlutterMethodChannel* channel;
   else if ([@"startPaymentUiFlow" isEqualToString:call.method]) {
     [self startPaymentUiFlowWithCall:call result:result];
   }
-  else if ([@"setUIKitCustomSetting" isEqualToString:call.method]) {
-    [self setUIKitCustomSettingWithCall:call result:result];
-  }
   else {
     result(FlutterMethodNotImplemented);
   }
@@ -42,7 +39,7 @@ FlutterMethodChannel* channel;
     if ([merchantServerURL containsString:@"sandbox"]) {
          environment = MidtransServerEnvironmentSandbox;
     }
-    [CONFIG setClientKey:clientKey
+    [[MidtransConfig shared] setClientKey:clientKey
              environment:environment
        merchantServerURL:merchantServerURL];
     result(nil);
@@ -55,11 +52,6 @@ FlutterMethodChannel* channel;
         vc.paymentDelegate = self;
         [[self rootViewController] presentViewController:vc animated:YES completion:nil];
     }];
-    result(nil);
-}
-
-- (void)setUIKitCustomSettingWithCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    
     result(nil);
 }
 
